@@ -1,0 +1,33 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<div class="form-card">
+  <h2>Log In</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <div class="form-group">
+        {{ form.username|as_crispy_field }}
+      </div>
+      <div class="form-group password-wrapper">
+        {{ form.password|as_crispy_field }}
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <button class="signup-btn" type="submit">
+        Sign In
+      </button>
+    </div>
+  </form>
+  <div class="form-footer">
+    <small class="text-muted">
+      Need an Account?
+      <a class="ml-2" href="{% url 'register' %}">Create an Account</a>
+    </small>
+  </div>
+</div>
+
+{% endblock content %}

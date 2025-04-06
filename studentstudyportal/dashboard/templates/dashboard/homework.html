@@ -1,0 +1,60 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+
+<div class="container my-4">
+  <h3 class="mb-4">Your Homework</h3>
+
+  {% if not homeworks_done %}
+    <div class="row">
+      {% for homework, serial in homeworks %}
+      <div class="col-md-6 mb-4">
+        <div class="card homework-card {% if homework.is_finished %}card-completed{% endif %}">
+          <div class="card-header d-flex justify-content-between">
+            <span>{{ serial }}. {{ homework.subject }}</span>
+            <a href="{% url 'delete-homework' homework.id %}" class="btn-icon">
+              <i class="fa fa-trash"></i>
+            </a>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ homework.title }}</h5>
+            <p class="card-text">{{ homework.description }}</p>
+            <p class="card-text"><strong>Due:</strong> {{ homework.due }}</p>
+            <a href="{% url 'update-homework' homework.id %}" class="btn btn-sm btn-outline-success">
+              {% if homework.is_finished %}
+              ✅ Completed – Mark Incomplete
+              {% else %}
+              ⏳ Not Done – Mark as Completed
+              {% endif %}
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-success" role="alert">
+      🎉 All homeworks are completed! Time to chill or create more.
+    </div>
+  {% endif %}
+</div>
+
+<hr>
+
+<div class="container my-5">
+  <h4 class="mb-3">Create New Homework</h4>
+  <form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      {{ form|crispy }}
+    </fieldset>
+    <div class="form-group mt-3">
+      <button class="btn btn-outline-primary" type="submit">Create</button>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

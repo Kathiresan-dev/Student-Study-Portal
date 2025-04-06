@@ -1,0 +1,28 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block content %}
+
+
+
+<section class="note-detail-container">
+  <div class="note-card">
+    <div class="note-header">
+      <h3>{{ notes.title }}</h3>
+    </div>
+    <div class="note-body">
+      <p class="note-description">
+        {{ notes.description }}
+      </p>
+    </div>
+    <div class="note-footer">
+      <a href="{% url 'delete-note' notes.id %}" class="btn btn-delete">
+        <i class="fa fa-trash"></i> Delete
+      </a>
+      <a href="{% url 'notes' %}" class="btn btn-back">
+        <i class="fa fa-arrow-left"></i> Back to Notes
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
